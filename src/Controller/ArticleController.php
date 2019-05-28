@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="app_homepage")
      * @return Response
-     * @throws \InvalidArgumentException
+     * @throws \LogicException
      */
     public function homepage ()
     {
-        return new Response( "First page on Symfony" );
+        return $this->render( '/article/homepage.html.twig' );
     }
 
     /**
@@ -30,7 +30,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/show/{testvar}")
+     * @Route("/show/{testvar}", name="article_show")
      * @param $testvar
      *
      * @return Response
@@ -44,6 +44,7 @@ class ArticleController extends AbstractController
             'I like bacon too! Buy some from my site! bakinsomebacon.com',
         ];
 
+//        dump( $testvar, $this );
         return $this->render( 'article/show.html.twig', [
             'title' => ucwords( str_replace( '-', ' ', $testvar ) ),
             'comments' => $comments,
